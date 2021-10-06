@@ -1,4 +1,4 @@
-package com.udacity.shoestore
+package com.kauzganga.shoestore
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
