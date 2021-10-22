@@ -21,6 +21,9 @@ class InstructionFragment : Fragment() {
         bindingObj.buttonShopping.setOnClickListener {
             findNavController().navigate(R.id.action_instructionFragment_to_listFragment)
         }
+        bindingObj.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_instructionFragment_to_detailFragment)
+        }
         return bindingObj.root
     }
 
