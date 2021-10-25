@@ -15,10 +15,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.kauzganga.shoestore.MainActivity
 import com.kauzganga.shoestore.R
 import com.kauzganga.shoestore.adapter.SleepNightAdapter
+import com.kauzganga.shoestore.database.ShoeDatabase
 import com.kauzganga.shoestore.databinding.FragmentListBinding
+import com.kauzganga.shoestore.models.ShoeRepository
 import com.kauzganga.shoestore.models.ShoeViewModel
+import com.kauzganga.shoestore.models.ShoeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.shoe_item.view.*
 
@@ -38,14 +42,17 @@ class ListFragment : Fragment() {
             container,
             false
         )
-       val viewModel = ViewModelProvider(requireActivity()).get(ShoeViewModel::class.java)
+        val dao = ShoeDatabase.getInstance(requireContext().applicationContext).shoeDatabaseDao
+        val repository = ShoeRepository(dao)
+        val factory = ShoeViewModelFactory(repository)
+
+       val viewModel = ViewModelProvider(requireActivity(), factory).get(ShoeViewModel::class.java)
+
         val shoeAdapter = SleepNightAdapter()
         bindingObj.sleepList.adapter = shoeAdapter
-        viewModel.shoes.observe(viewLifecycleOwner, Observer{
-            it?.let{
-                shoeAdapter.shoes = it
-                Log.i("shoe", it.toString())
-            }
+
+            viewModel.shoes.observe(viewLifecycleOwner, Observer{
+            shoeAdapter.shoes = it
         })
         bindingObj.fab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_detailFragment)
