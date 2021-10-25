@@ -2,10 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="shoeViewModel"
+            type="com.kauzganga.shoestore.models.ShoeViewModel" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
@@ -14,6 +20,16 @@
             android:src="@drawable/ic_add"
             android:contentDescription="submit"
             android:layout_margin="16dp" />
+        <Button
+            android:id="@+id/clear_shoe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
+            android:text="Clear All"
+            android:onClick="@{()->shoeViewModel.clear()}"
+            android:textColor="@android:color/white" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sleep_list"
             android:layout_width="match_parent"

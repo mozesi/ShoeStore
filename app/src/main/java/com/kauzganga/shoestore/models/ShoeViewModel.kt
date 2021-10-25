@@ -12,26 +12,32 @@ import kotlinx.coroutines.launch
 
 
 class ShoeViewModel (private val shoeRepository: ShoeRepository) : ViewModel()  {
-    val shoes  = shoeRepository.shoes
 
+    var shoes  = shoeRepository.shoes
     val inPutName    = MutableLiveData<String>()
     val inPutSize    = MutableLiveData<String>()
     val inPutDescription = MutableLiveData<String>()
     val inPutCompany = MutableLiveData<String>()
 
     fun saveShoe(){
-    val shoe = Shoe(0,"inPutSize.value!!.toString()","inPutName.value!!"
-            ,":inPutCompany.value!!","inPutDescription.value!!")
+        val shoe = Shoe(0,inPutSize.value!!.toString(),inPutName.value!!.toString()
+                ,inPutCompany.value!!.toString(),inPutDescription.value!!.toString())
+        insert(shoe)
+    }
 
-
-    //Log.i("shoe",shoe.toString())
-    insert(shoe)
-
+    fun clear(){
+        clearAll()
     }
 
     private fun insert(shoe: Shoe){
         viewModelScope.launch {
            shoeRepository.insert(shoe)
+        }
+    }
+
+    fun  clearAll(){
+        viewModelScope.launch {
+            shoeRepository.clear()
         }
     }
 

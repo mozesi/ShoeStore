@@ -50,13 +50,16 @@ class ListFragment : Fragment() {
 
         val shoeAdapter = SleepNightAdapter()
         bindingObj.sleepList.adapter = shoeAdapter
+        bindingObj.shoeViewModel = viewModel
 
-            viewModel.shoes.observe(viewLifecycleOwner, Observer{
+        viewModel.shoes.observe(viewLifecycleOwner, Observer{
             shoeAdapter.shoes = it
         })
+
         bindingObj.fab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_detailFragment)
         }
+
         return bindingObj.root
     }
 
